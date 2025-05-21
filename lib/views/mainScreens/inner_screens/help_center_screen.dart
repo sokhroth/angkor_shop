@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HelpCenterScreen extends StatelessWidget {
   const HelpCenterScreen({super.key});
@@ -25,11 +26,14 @@ class HelpCenterScreen extends StatelessWidget {
         iconUrl:
             'https://storage.googleapis.com/codeless-app.appspot.com/uploads%2Fimages%2Fnn2Ldqjoc2Xp89Y7Wfzf%2F0df2f67e-77ea-4b00-8dc8-01b3ef2d061c.png',
         label: 'Instagram',
+        url:
+            'https://www.instagram.com/niruot_konkhmer?igsh=MWluNjRjN2M1ZjRpNA==',
       ),
       _ContactItem(
         iconUrl:
             'https://storage.googleapis.com/codeless-app.appspot.com/uploads%2Fimages%2Fnn2Ldqjoc2Xp89Y7Wfzf%2F4f070b08-2c14-4e98-8657-9e402656411a.png',
         label: 'Twitter',
+        url: 'https://twitter.com/niruot',
       ),
     ];
 
@@ -92,8 +96,9 @@ class HelpCenterScreen extends StatelessWidget {
 class _ContactItem {
   final String iconUrl;
   final String label;
+  final String? url;
 
-  _ContactItem({required this.iconUrl, required this.label});
+  _ContactItem({required this.iconUrl, required this.label, this.url});
 }
 
 class _ContactTile extends StatelessWidget {
@@ -101,38 +106,65 @@ class _ContactTile extends StatelessWidget {
 
   const _ContactTile({required this.item});
 
+  void _launchUrl(BuildContext context) async {
+    if (item.url != null) {
+      final uri = Uri.parse(item.url!);
+      print('Trying to launch: $uri');
+      if (await canLaunchUrl(uri)) {
+        final success = await launchUrl(
+          uri,
+          mode: LaunchMode.externalApplication,
+        );
+        if (!success) {
+          print('Launch failed');
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text('Failed to launch URL')));
+        }
+      } else {
+        print('Cannot launch: $uri');
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Could not launch URL')));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 7),
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      height: 50,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: const [BoxShadow(color: Color(0x26000000), blurRadius: 3)],
-      ),
-      child: Row(
-        children: [
-          Image.network(item.iconUrl, width: 25, height: 25),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Text(
-              item.label,
-              style: const TextStyle(
-                color: Color(0xB2000000),
-                fontSize: 17,
-                fontWeight: FontWeight.w600,
-                fontFamily: 'Lato',
+    return InkWell(
+      onTap: () => _launchUrl(context),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 7),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        height: 50,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: const [BoxShadow(color: Color(0x26000000), blurRadius: 3)],
+        ),
+        child: Row(
+          children: [
+            Image.network(item.iconUrl, width: 25, height: 25),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Text(
+                item.label,
+                style: const TextStyle(
+                  color: Color(0xB2000000),
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Lato',
+                ),
               ),
             ),
-          ),
-          const Icon(
-            Icons.arrow_forward_ios_rounded,
-            size: 16,
-            color: Colors.black54,
-          ),
-        ],
+            const Icon(
+              Icons.arrow_forward_ios_rounded,
+              size: 16,
+              color: Colors.black54,
+            ),
+          ],
+        ),
       ),
     );
   }

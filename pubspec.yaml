@@ -53,6 +53,8 @@ dependencies:
   alert_info: ^0.0.3
   flutter_screenutil: ^5.9.3
   auto_size_text: ^3.0.0
+  animated_to: ^0.3.2
+  animate_do: ^4.2.0
 
 dev_dependencies:
   flutter_test:

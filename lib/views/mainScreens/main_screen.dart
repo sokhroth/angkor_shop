@@ -20,7 +20,6 @@ class _MainScreenState extends State<MainScreen> {
     HomeScreen(),
     AllCategoriesScreen(),
     CartScreen(),
-    Text('WishList'),
     Profile(),
   ];
 
@@ -28,7 +27,6 @@ class _MainScreenState extends State<MainScreen> {
     {'label': 'Home', 'icon': 'assets/icons/home.png'},
     {'label': 'Category', 'icon': 'assets/icons/category.png'},
     {'label': 'Cart', 'icon': 'assets/icons/cart.png'},
-    {'label': 'Wishlist', 'icon': 'assets/icons/wishlist.png'},
     {'label': 'Profile', 'icon': 'assets/icons/profile.png'},
   ];
 
