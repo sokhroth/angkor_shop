@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
               if (user != null) {
                 Future.microtask(() {
                   AuthController().checkTokenAndNavigate(
+                    // ignore: use_build_context_synchronously
                     context: context,
                     userNotifier: userNotifier,
                   );

@@ -1,5 +1,5 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:angkor_shop/models/user_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserState extends StateNotifier<User?> {
@@ -18,6 +18,11 @@ class UserState extends StateNotifier<User?> {
     await prefs.setString('userLocality', updatedUser.locality);
     await prefs.setString('userToken', updatedUser.token);
     await prefs.setString('userId', updatedUser.userId);
+    await prefs.setString('userPhoneNumber', updatedUser.phoneNumber); // ✅ New
+    await prefs.setString(
+      'userProfileImage',
+      updatedUser.profileImage,
+    ); // ✅ New
   }
 
   // Load the user from storage when app starts
@@ -30,6 +35,8 @@ class UserState extends StateNotifier<User?> {
     final locality = prefs.getString('userLocality');
     final token = prefs.getString('userToken');
     final userId = prefs.getString('userId');
+    final phoneNumber = prefs.getString('userPhoneNumber'); // ✅ New
+    final profileImage = prefs.getString('userProfileImage'); // ✅ New
 
     if (email != null && token != null && userId != null) {
       state = User(
@@ -41,6 +48,8 @@ class UserState extends StateNotifier<User?> {
         locality: locality ?? '',
         password: '',
         token: token,
+        phoneNumber: phoneNumber ?? '',
+        profileImage: profileImage ?? '',
       );
     }
   }

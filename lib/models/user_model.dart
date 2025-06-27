@@ -10,6 +10,8 @@ class User {
   final String locality;
   final String password;
   final String token;
+  final String phoneNumber; // ✅ New field
+  final String profileImage; // ✅ New field
 
   User({
     required this.fullName,
@@ -20,7 +22,35 @@ class User {
     required this.locality,
     required this.password,
     required this.token,
+    required this.phoneNumber, // ✅
+    required this.profileImage, // ✅
   });
+
+  User copyWith({
+    String? fullName,
+    String? userId,
+    String? email,
+    String? state,
+    String? city,
+    String? locality,
+    String? password,
+    String? token,
+    String? phoneNumber, // ✅
+    String? profileImage, // ✅
+  }) {
+    return User(
+      fullName: fullName ?? this.fullName,
+      userId: userId ?? this.userId,
+      email: email ?? this.email,
+      state: state ?? this.state,
+      city: city ?? this.city,
+      locality: locality ?? this.locality,
+      password: password ?? this.password,
+      token: token ?? this.token,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      profileImage: profileImage ?? this.profileImage,
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -32,30 +62,9 @@ class User {
       'locality': locality,
       'password': password,
       'token': token,
+      'phoneNumber': phoneNumber,
+      'profileImage': profileImage,
     };
-  }
-
-  // Add this 👇
-  User copyWith({
-    String? fullName,
-    String? userId,
-    String? email,
-    String? state,
-    String? city,
-    String? locality,
-    String? password,
-    String? token,
-  }) {
-    return User(
-      fullName: fullName ?? this.fullName,
-      userId: userId ?? this.userId,
-      email: email ?? this.email,
-      state: state ?? this.state,
-      city: city ?? this.city,
-      locality: locality ?? this.locality,
-      password: password ?? this.password,
-      token: token ?? this.token,
-    );
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
@@ -68,6 +77,8 @@ class User {
       locality: map['locality'] as String? ?? "",
       password: map['password'] as String? ?? "",
       token: map['token'] as String? ?? "",
+      phoneNumber: map['phoneNumber'] as String? ?? "",
+      profileImage: map['profileImage'] as String? ?? "",
     );
   }
 

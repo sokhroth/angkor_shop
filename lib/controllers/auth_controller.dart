@@ -28,6 +28,8 @@ class AuthController {
         locality: '',
         password: password,
         token: '',
+        phoneNumber: '',
+        profileImage: '',
       );
 
       http.Response response = await http.post(
@@ -101,6 +103,8 @@ class AuthController {
               locality: responseData['locality'],
               password: '',
               token: tokens['AccessToken'],
+              phoneNumber: '',
+              profileImage: ''
             ),
           );
 
@@ -166,6 +170,8 @@ class AuthController {
                   city: '',
                   locality: '',
                   token: '',
+                  phoneNumber: '',
+                  profileImage: '',
                 ),
                 token: '',
               );
@@ -207,7 +213,7 @@ class AuthController {
       // Send the update request
       http.Response response = await http.post(
         Uri.parse(
-          "https://093l5ar3cb.execute-api.ap-southeast-1.amazonaws.com/update-location",
+          "https://117jajq1eb.execute-api.ap-southeast-1.amazonaws.com/update-location",
         ),
         body: requestBody,
         headers: <String, String>{
@@ -256,7 +262,7 @@ class AuthController {
 
     final response = await http.post(
       Uri.parse(
-        'https://093l5ar3cb.execute-api.ap-southeast-1.amazonaws.com/check-token',
+        'https://117jajq1eb.execute-api.ap-southeast-1.amazonaws.com/check-token',
       ),
       body: jsonEncode({'accessToken': token}),
       headers: {"Content-Type": 'application/json; charset=UTF-8'},
